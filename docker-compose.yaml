@@ -1,0 +1,18 @@
+version: '2'
+services:
+  v2ray_docker:
+    build:
+        context: ./v2ray
+        dockerfile: v2ray.Dockerfile
+    restart: always
+  nginx_proxy_v2ray:
+    build:
+        context: ./nginx
+        dockerfile: nginx.Dockerfile
+    depends_on: 
+      -  v2ray_docker
+    links: 
+      -  v2ray_docker
+    restart: always
+    ports:
+        - "443:443"
